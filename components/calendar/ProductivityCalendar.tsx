@@ -56,7 +56,11 @@ export function ProductivityCalendar({
     const score = productivityScores[dateStr];
 
     if (!score) {
+<<<<<<< HEAD
       return <div role="presentation">{children}</div>;
+=======
+      return children;
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
     }
 
     const badge = getProductivityBadge(score.score);
@@ -68,7 +72,11 @@ export function ProductivityCalendar({
     }[badge];
 
     return (
+<<<<<<< HEAD
       <div className="relative" role="presentation">
+=======
+      <div className="relative">
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
         {children}
         <div className="absolute top-1 right-1 text-xs">
           {badgeEmoji}
@@ -82,6 +90,7 @@ export function ProductivityCalendar({
       <style jsx global>{`
         .productivity-calendar .rbc-calendar {
           font-family: inherit;
+<<<<<<< HEAD
           height: 320px !important;
         }
         .productivity-calendar .rbc-header {
@@ -91,11 +100,19 @@ export function ProductivityCalendar({
           font-size: 0.875rem;
           background-color: hsl(var(--muted));
           color: hsl(var(--foreground));
+=======
+        }
+        .productivity-calendar .rbc-header {
+          padding: 0.75rem 0;
+          font-weight: 600;
+          border-bottom: 1px solid hsl(var(--border));
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
         }
         .productivity-calendar .rbc-month-view {
           border: 1px solid hsl(var(--border));
           border-radius: 0.5rem;
           overflow: hidden;
+<<<<<<< HEAD
           height: 320px !important;
         }
         .productivity-calendar .rbc-day-bg {
@@ -130,6 +147,18 @@ export function ProductivityCalendar({
           justify-content: center;
           width: 100%;
           height: 100%;
+=======
+        }
+        .productivity-calendar .rbc-day-bg {
+          border-left: 1px solid hsl(var(--border));
+        }
+        .productivity-calendar .rbc-month-row {
+          border-top: 1px solid hsl(var(--border));
+        }
+        .productivity-calendar .rbc-date-cell {
+          padding: 0.5rem;
+          text-align: right;
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
         }
         .productivity-calendar .rbc-now {
           background-color: hsl(var(--primary) / 0.1);
@@ -144,6 +173,7 @@ export function ProductivityCalendar({
           background-color: hsl(var(--primary) / 0.3) !important;
         }
       `}</style>
+<<<<<<< HEAD
       <div style={{ height: '320px' }}>
         <Calendar
           localizer={localizer}
@@ -161,6 +191,23 @@ export function ProductivityCalendar({
           style={{ height: '320px', width: '100%' }}
         />
       </div>
+=======
+      <Calendar
+        localizer={localizer}
+        date={selectedDate}
+        onNavigate={onDateChange}
+        onSelectSlot={(slotInfo: any) => onDateChange(slotInfo.start)}
+        view="month"
+        views={['month']}
+        selectable
+        toolbar={true}
+        dayPropGetter={customDayPropGetter}
+        components={{
+          dateCellWrapper: customDateCellWrapper,
+        }}
+        style={{ height: '100%', width: '100%' }}
+      />
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
       <div className="mt-4 flex flex-wrap gap-3 text-xs">
         <div className="flex items-center gap-1">
           <span>🟢</span>

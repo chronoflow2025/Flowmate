@@ -123,16 +123,54 @@ export default function DashboardPage() {
             <div className="text-sm text-muted-foreground">
               {format(selectedDate, 'EEEE, MMMM d, yyyy')}
             </div>
+<<<<<<< HEAD
+=======
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleGeneratePlan}
+              disabled={isGeneratingPlan}
+            >
+              {isGeneratingPlan ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Generate Plan
+                </>
+              )}
+            </Button>
+            <Button
+              variant={isChatOpen ? "default" : "outline"}
+              size="sm"
+              onClick={() => setIsChatOpen(!isChatOpen)}
+            >
+              {isChatOpen ? (
+                <X className="w-4 h-4 mr-2" />
+              ) : (
+                <MessageSquare className="w-4 h-4 mr-2" />
+              )}
+              AI Chat
+            </Button>
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
           </div>
         </div>
       </header>
 
       <div className="flex-1 flex overflow-hidden">
+<<<<<<< HEAD
         <aside className="w-[30%] border-r bg-muted/10 p-6 flex flex-col overflow-hidden">
+=======
+        <aside className="w-[30%] border-r bg-muted/10 p-6 overflow-auto">
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
           <div className="flex items-center gap-2 mb-4">
             <Calendar className="w-5 h-5" />
             <h2 className="text-lg font-semibold">Calendar</h2>
           </div>
+<<<<<<< HEAD
           <div className="flex-shrink-0">
             <ProductivityCalendar
               selectedDate={selectedDate}
@@ -142,13 +180,26 @@ export default function DashboardPage() {
         </aside>
 
         <main className="w-[70%] p-6 flex flex-col overflow-hidden">
+=======
+          <ProductivityCalendar
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
+        </aside>
+
+        <main className="w-[70%] p-6 overflow-auto">
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
           <div className="mb-4">
             <h2 className="text-lg font-semibold">Daily Timeline</h2>
             <p className="text-sm text-muted-foreground">
               {tasks.length} tasks scheduled for today
             </p>
           </div>
+<<<<<<< HEAD
           <div className="flex-1 relative pl-20 pr-4 overflow-hidden">
+=======
+          <div className="relative h-[calc(100vh-200px)] pl-20 pr-4">
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
             <DayTimeline
               date={selectedDate}
               tasks={tasks}

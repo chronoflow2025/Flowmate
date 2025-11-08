@@ -75,6 +75,7 @@ export function DayTimeline({
   const gradient = userProfile?.colorGradient || { low: '#60a5fa', high: '#c084fc' };
 
   return (
+<<<<<<< HEAD
     <div className={cn('day-timeline relative h-full overflow-auto', className)} ref={timelineRef}>
       <div className="relative" style={{ height: '1440px', paddingBottom: '2rem' }}>
         {HOURS.map((hour, index) => (
@@ -87,6 +88,19 @@ export function DayTimeline({
               {format(new Date().setHours(hour, 0, 0, 0), 'h:mm a')}
             </span>
             <div className="flex-1 border-t border-border"></div>
+=======
+    <div className={cn('day-timeline relative h-full', className)} ref={timelineRef}>
+      <div className="relative h-full">
+        {HOURS.map((hour, index) => (
+          <div
+            key={hour}
+            className="absolute w-full border-t border-border"
+            style={{ top: `${(index / 24) * 100}%` }}
+          >
+            <div className="absolute -left-16 -top-3 text-sm text-muted-foreground">
+              {format(new Date().setHours(hour, 0, 0, 0), 'h:mm a')}
+            </div>
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
           </div>
         ))}
 
@@ -96,7 +110,11 @@ export function DayTimeline({
             style={{ top: `${currentTimePosition}%` }}
           >
             <div className="absolute -left-16 -top-3 text-sm font-semibold text-red-500">
+<<<<<<< HEAD
               {format(new Date().setHours(new Date().getHours(), 0, 0, 0), 'h:mm a')}
+=======
+              Now
+>>>>>>> d15bdf620d62899b54249d5ff7d9f91abfdba2b3
             </div>
           </div>
         )}
