@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 
     const profileResult = await userRepo.getProfile(userId);
     
-    if (!profileResult.ok) {
+    if (!profileResult.ok || !profileResult.value) {
       return badRequest('User profile not found. Complete onboarding first.');
     }
 
