@@ -123,36 +123,6 @@ export default function DashboardPage() {
             <div className="text-sm text-muted-foreground">
               {format(selectedDate, 'EEEE, MMMM d, yyyy')}
             </div>
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={handleGeneratePlan}
-              disabled={isGeneratingPlan}
-            >
-              {isGeneratingPlan ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Generate Plan
-                </>
-              )}
-            </Button>
-            <Button
-              variant={isChatOpen ? "default" : "outline"}
-              size="sm"
-              onClick={() => setIsChatOpen(!isChatOpen)}
-            >
-              {isChatOpen ? (
-                <X className="w-4 h-4 mr-2" />
-              ) : (
-                <MessageSquare className="w-4 h-4 mr-2" />
-              )}
-              AI Chat
-            </Button>
           </div>
         </div>
       </header>

@@ -124,12 +124,11 @@ export function ProductivityCalendar({
         view="month"
         views={['month']}
         selectable
-        toolbar={true}
         dayPropGetter={customDayPropGetter}
         components={{
           dateCellWrapper: customDateCellWrapper,
         }}
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: '400px', width: '100%' }}
       />
       <div className="mt-4 flex flex-wrap gap-3 text-xs">
         <div className="flex items-center gap-1">
