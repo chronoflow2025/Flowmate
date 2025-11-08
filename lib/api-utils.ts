@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 
+const MOCK_MODE = process.env.NEXT_PUBLIC_MOCK_DATA === 'true';
+
 export async function getUserId(): Promise<string | null> {
+  if (MOCK_MODE) {
+    return 'mock-user-123';
+  }
+  
   const { userId } = await auth();
   return userId;
 }
