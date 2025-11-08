@@ -66,6 +66,14 @@ body {
   color: hsl(var(--foreground));
 }
 
+.rbc-header {
+  background-color: #1e1f2259;
+}
+
 .rbc-toolbar {
   display: none !important;
+}
+
+.productivity-calendar .rbc-now {
+  background-color: transparent !important;
 }
