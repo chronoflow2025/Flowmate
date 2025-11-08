@@ -12,7 +12,8 @@ import { useUserStore } from '@/stores/user';
 import { useAuthStore } from '@/stores/auth';
 import { Task } from '@/types/shared';
 import { Button } from '@/components/ui/button';
-import { Calendar, LayoutDashboard, MessageSquare, X, Sparkles, Loader2 } from 'lucide-react';
+import { Calendar, LayoutDashboard, MessageSquare, X, Sparkles, Loader2, BarChart3, Settings } from 'lucide-react';
+import Link from 'next/link';
 
 export default function DashboardPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -92,9 +93,31 @@ export default function DashboardPage() {
     <div className="h-screen flex flex-col">
       <header className="border-b bg-background px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <LayoutDashboard className="w-6 h-6 text-primary" />
-            <h1 className="text-2xl font-bold">FlowMate</h1>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3">
+              <LayoutDashboard className="w-6 h-6 text-primary" />
+              <h1 className="text-2xl font-bold">FlowMate</h1>
+            </div>
+            <nav className="flex items-center gap-2">
+              <Link href="/dashboard">
+                <Button variant="ghost" size="sm">
+                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Button>
+              </Link>
+              <Link href="/analytics">
+                <Button variant="ghost" size="sm">
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  Analytics
+                </Button>
+              </Link>
+              <Link href="/settings">
+                <Button variant="ghost" size="sm">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Settings
+                </Button>
+              </Link>
+            </nav>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-sm text-muted-foreground">
