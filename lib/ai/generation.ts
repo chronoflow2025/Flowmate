@@ -1,4 +1,4 @@
-import { genAI, checkRateLimit } from './client';
+import { getGenAI, checkRateLimit } from './client';
 import { buildPlanGenerationPrompt, parseTasksFromAIResponse } from './prompts';
 import { UserProfile, Feedback, ActivityPattern, Task, APIResponse } from '@/types/shared';
 
@@ -24,6 +24,7 @@ export async function generateDailyPlan(
       targetDate
     );
 
+    const genAI = getGenAI();
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     const result = await model.generateContent(prompt);
     const response = result.response;
@@ -61,6 +62,7 @@ export async function streamChatResponse(
     const { buildChatPrompt } = await import('./prompts');
     const prompt = buildChatPrompt(userMessage, profile, currentPlan);
 
+    const genAI = getGenAI();
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     const result = await model.generateContentStream(prompt);
 

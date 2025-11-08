@@ -44,6 +44,6 @@ class GeminiClient {
   }
 }
 
-export const genAI = GeminiClient.getInstance();
+export const getGenAI = () => GeminiClient.getInstance();
 export const checkRateLimit = () => GeminiClient.checkRateLimit();
 export const resetRateLimit = () => GeminiClient.resetRateLimit();
