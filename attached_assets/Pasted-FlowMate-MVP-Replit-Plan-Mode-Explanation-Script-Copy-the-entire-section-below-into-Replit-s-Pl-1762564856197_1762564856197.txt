@@ -1,0 +1,365 @@
+lowMate - Complete Project Breakdown
+Let me give you the full picture of what we've designed so far:
+
+🎯 Project Vision
+An AI-powered productivity assistant that learns from user behavior to build optimized daily schedules, focusing specifically on tomorrow's plan generation with real-time feedback loops.
+
+🛠️ Tech Stack
+Frontend:
+
+Next.js 15 (App Router + TypeScript)
+Tailwind CSS + Shadcn UI components
+Zustand (global state management)
+React Big Calendar (date picker)
+Recharts (data visualization)
+Authentication:
+
+Clerk (Google OAuth + Guest mode)
+Backend:
+
+Next.js API Routes (built-in, no separate Python server)
+Google Gemini API (100% FREE for AI)
+Replit DB (key-value storage)
+Google Calendar Connector (optional)
+AI Strategy:
+
+Development: Local Ollama (on your machine, free testing)
+Production: Google Gemini API (free tier, deployed on Replit)
+📱 Core Features
+1. Authentication
+Google sign-in via Clerk with google calendar access. 
+Guest access (anonymous users)
+Automatic redirect: new users → onboarding, returning → dashboard
+2. Onboarding (Multi-Step)
+Collects:
+
+Occupation/industry
+Daily routine (wake/sleep times)
+Habits (morning coffee, exercise, etc.)
+Focus scale (1-10): self-reported baseline
+Peak activity hours (when most productive)
+
+3. Main Focus Mode (Core UI)
+Layout:
+
+┌─────────────────────────────────────────────┐
+│  FlowMate 🎯           [Profile Pic ▾]      │  Top Bar
+├──────────┬──────────────────────────────────┤
+│          │  Timeline (Hourly Grid)          │
+│ Calendar │  ┌──────────────────────────────┐│
+│ (30%)    │  │ 09:00 ▓▓▓▓▓▓▓ Deep Work  4.5││
+│          │  │ 11:00 ░░░ Break           2.0││
+│   Nov 8  │  │ 11:15 ▓▓▓ Meeting        3.5││
+│   ⭐ 76% │  │ 12:00 ░░░░ Lunch         1.0││
+│          │  │ 13:00 ▓▓▓▓▓ Coding        5.0││
+│ Nov 9    │  │ 15:00 🔒 Past event (locked) ││
+│   (70%)  │  └──────────────────────────────┘│
+│          │                                  │
+├──────────┴──────────────────────────────────┤
+│ 💬 "Generate tomorrow's plan with breaks"   │  AI Chat
+└─────────────────────────────────────────────┘
+
+Left Panel: Calendar (30% width)
+
+Pure date picker (no events shown)
+Click date → updates timeline view
+Daily productivity badges: Color-coded scores
+🟢 90-100% (Excellent)
+🟡 70-89% (Good)
+🟠 50-69% (Average)
+🔴 <50% (Needs work)
+Right Panel: Timeline (70% width)
+
+Hourly grid: 3 AM → 3 AM (next day)
+Each task = colored block based on priority
+Priority system: 1.0 → 5.0 (in 0.5 increments)
+1.0 = Lowest
+5.0 = Critical
+Custom color gradient: User can change colors (accessibility)
+Editing rules:
+✅ Upcoming events: Full edit (time, priority, delete)
+🔒 Ended events: Read-only, greyed out, locked
+Bottom: AI Chatbot
+
+Generates tomorrow's plan only
+Commands:
+"Generate tomorrow's plan"
+"Add 2-hour deep work session tomorrow morning"
+"Move tomorrow's meeting to 4 PM"
+Streaming responses (word-by-word)
+4. Feedback System
+FeedbackToast (appears 2 mins before task ends):
+Collects 3 data points:
+
+Focus Rating (1-10 slider)
+"How focused were you?"
+Process Completion (dropdown)
+0%, 25%, 50%, 75%, 100%
+Text Feedback (optional)
+"What helped or hindered your focus?"
+Examples: "Too loud", "Coffee helped", "Great music"
+Stored with timestamp for pattern analysis.
+
+5. Dashboard Analytics
+Graphs powered by Recharts:
+
+30-Day Productivity Trend (Line chart)
+
+Daily scores over time
+Shows improvement trajectory
+Weekly Heatmap (Calendar heatmap)
+
+Which days are best/worst
+Color intensity = productivity score
+Time-of-Day Activity Area Graph
+
+X-axis: Hours (6 AM → 11 PM)
+Y-axis: Activity/Focus level (0-100%)
+Labels: What activities preceded peaks
+Example: "Peak at 9 AM after morning coffee ☕"
+Focus vs Completion Scatter Plot
+
+Shows correlation
+Insight: "8+ focus = 90% completion rate"
+Completion Rate Trends (Bar chart)
+
+% of tasks completed per day
+Week-over-week comparison
+Focus-Completion Matrix (Quadrant chart)
+
+High Focus + High Completion = 🟢 Optimal
+High Focus + Low Completion = 🟡 Tasks too ambitious?
+Low Focus + High Completion = 🟠 Boring tasks?
+Low Focus + Low Completion = 🔴 Need help
+
+Sentiment Word Cloud (from text feedback)
+
+Most common keywords
+Pattern detection: "interrupted" appears at 3 PM
+Monthly Comparisons
+
+"November was 12% better than October"
+6. Profile & Settings
+Profile Page:
+
+Edit occupation, habits, routines
+Update focus preferences
+Change peak hours
+Re-customize priority color gradient
+Re-sync Google Calendar
+Settings (LinkedIn-style sidebar):
+
+Account: Name, email, delete account
+Privacy: Data export, clear history
+Notifications:
+Email/push toggles
+Reminder timing (2 mins before task ends)
+Appearance:
+Dark mode toggle
+Time format (12hr/24hr)
+Priority color presets (color-blind friendly options)
+🔄 Data Flow
+User Signs In (Clerk)
+    ↓
+Onboarding → Save to Replit DB
+    ↓
+Google Calendar Sync (optional)
+    ↓
+AI Generates Tomorrow's Plan (Gemini)
+    ↓
+User Views/Edits Timeline
+    ↓
+AI Chat Adjustments (real-time)
+    ↓
+Task Ends → FeedbackToast
+    ↓
+Collect: Focus (1-10), Completion (%), Text
+    ↓
+Calculate Daily Productivity Score
+    ↓
+Update Calendar Badge
+    ↓
+Analyze Patterns (hourly activity, triggers)
+    ↓
+AI Learns → Better Tomorrow's Plan
+    ↓
+Dashboard Shows Trends & Insights
+
+🗄️ Database Schema (Replit DB)
+// User profile
+user:{userId}:profile
+{
+  occupation: "Software Engineer",
+  focusScale: 8,
+  peakHours: ["9-11 AM", "2-4 PM"],
+  habits: ["coffee", "walk"],
+  routine: "Early bird",
+  colorGradient: { low: "#FF0000", high: "#00FF00" }
+}
+// Daily plan
+user:{userId}:plan:{date}
+{
+  date: "2025-11-09",
+  tasks: [
+    {
+      id: "task-123",
+      time: "09:00",
+      duration: 120,
+      title: "Deep Work",
+      priority: 4.5,
+      completed: false
+    }
+  ]
+}
+// Feedback
+user:{userId}:feedback:{taskId}
+{
+  taskId: "task-123",
+  focusRating: 8,
+  completionPercent: 75,
+  textFeedback: "Coffee helped focus",
+  timestamp: "2025-11-08T11:00:00Z"
+}
+// Daily productivity score
+user:{userId}:score:{date}
+{
+  date: "2025-11-08",
+  score: 76,
+  totalTasks: 5,
+  completedTasks: 4,
+  avgFocus: 7.6
+}
+// Hourly activity patterns
+user:{userId}:activity:{date}
+{
+  "09:00": { focus: 9, activity: "Deep Work" },
+  "10:00": { focus: 8, activity: "Deep Work" },
+  "11:00": { focus: 4, activity: "Break" }
+}
+
+🔌 API Endpoints
+// Authentication
+POST /api/auth/session
+// Onboarding
+POST /api/user/onboarding
+GET  /api/user/profile
+PUT  /api/user/profile
+// Plan generation (TOMORROW ONLY)
+POST /api/plan/generate    // Generate tomorrow's plan
+PUT  /api/plan/adjust      // Modify tomorrow's plan
+// AI Chat (streaming)
+POST /api/chat             // Natural language adjustments
+// Feedback
+POST /api/feedback         // Submit focus, completion, text
+// Analytics
+GET /api/productivity/daily           // Daily scores
+GET /api/analytics/activity-pattern   // Hourly activity data
+GET /api/analytics/completion-trends  // Completion rates
+GET /api/analytics/insights          // AI-generated insights
+// Calendar
+GET /api/calendar/sync    // Fetch Google Calendar events
+
+🎨 Accessibility Features
+Custom Priority Colors
+
+Default: Red → Green gradient
+Color-blind options:
+Blue → Orange (Protanopia)
+Purple → Yellow (Deuteranopia)
+Black → White (High contrast)
+Fully customizable by user
+Keyboard Navigation
+
+Tab through tasks
+Arrow keys to change dates
+Enter to edit
+Screen Reader Support
+
+ARIA labels on all interactive elements
+Status announcements
+Dark Mode
+
+System preference detection
+Manual toggle in settings
+🤖 AI Functionality
+Gemini AI does:
+
+Generate tomorrow's plan based on:
+
+User's occupation & routine
+Peak activity hours
+Past feedback patterns
+Completion rates at different times
+Google Calendar events
+Parse chat commands (structured outputs):
+
+"Move task" → {action: "move", taskId, newTime}
+"Add task" → {action: "add", task, time, priority}
+"Delete task" → {action: "delete", taskId}
+Learn from feedback:
+
+Low focus after 2hrs → Add breaks
+"Coffee" mentioned often → Schedule buffer after coffee time
+High completion at 9 AM → Prioritize hard tasks there
+Generate insights:
+
+"You're 30% more productive after walks"
+"Consider adding a break at 3 PM (focus drops 40%)"
+👤 User Journey
+New User:
+
+Sign in (Google/Guest)
+  ↓
+Onboarding (5 mins)
+  ↓
+AI generates tomorrow's plan
+  ↓
+View/edit timeline
+  ↓
+Complete tasks
+  ↓
+Submit feedback
+  ↓
+See dashboard analytics
+
+Returning User:
+
+Sign in
+  ↓
+View today's plan
+  ↓
+Chat: "Adjust my plan"
+  ↓
+Complete tasks
+  ↓
+Submit feedback
+  ↓
+AI improves tomorrow's plan
+
+💰 Cost Analysis
+Gemini API: FREE (250 requests/day)
+Clerk Auth: FREE (10,000 MAU)
+Replit DB: FREE (basic tier)
+Deployment: FREE (Replit Autoscale free tier)
+Total: $0/month for MVP! 🎉
+
+📊 Success Metrics
+What makes this MVP successful:
+
+User completes onboarding
+AI generates a sensible tomorrow's plan
+User edits ≥1 task
+User submits feedback after task
+Dashboard shows meaningful insights
+Daily productivity score visible on calendar
+AI adapts plan based on feedback
+🚀 Build Timeline
+Estimated: 12-18 hours total
+
+Phase 1: Foundation (3-4 hrs)
+Phase 2: Authentication & Onboarding (2-3 hrs)
+Phase 3: Main Timeline UI (3-4 hrs)
+Phase 4: AI Chat & Feedback (2-3 hrs)
+Phase 5: Dashboard Analytics (2-3 hrs)
+Phase 6: Polish & Deploy (1-2 hrs)
+

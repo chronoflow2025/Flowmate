@@ -1,0 +1,60 @@
+Hi Replit Agent 3, I want to build a hackathon MVP for a project called "FlowMate" — an AI-powered productivity assistant that generates personalized daily schedules based on focus patterns, task list, and calendar events. Please scaffold the full-stack project with the following requirements:
+
+---
+
+### 1. Tech Stack
+- **Frontend:** Next.js + Tailwind CSS
+- **Backend:** Python (Flask or FastAPI) for API endpoints
+- **AI:** Replit Agent 3 + optional OpenAI API calls for schedule generation
+- **Database:** Replit DB (key-value storage)
+- **Hosting/Deployment:** Replit deploy (full-stack)
+
+---
+
+### 2. Project Structure
+- `/frontend` → Next.js frontend with:
+  - Pages: `index` (dashboard), `feedback` (submit daily focus feedback)
+  - Components: `Header`, `PlanCard`, `FocusGraph`, `FeedbackForm`
+  - Tailwind configured for responsive UI
+- `/backend` → Flask API with:
+  - `/plan` (GET) → Returns AI-generated daily schedule JSON
+  - `/feedback` (POST) → Stores user focus feedback in Replit DB
+  - `ai_agent.py` → Handles communication with Replit Agent 3 / AI logic
+- `/data` → Optional JSON storage for MVP
+- `.replit` / `replit.nix` → Config for full-stack run
+
+---
+
+### 3. MVP Features
+1. **AI Timesheet Generation**
+   - Backend generates a simple daily schedule for next day
+   - For hackathon MVP, heuristic-based focus prediction is okay
+2. **Feedback Loop**
+   - Users submit focus ratings (1–5) after completing day
+   - Store in DB for next day's plan adjustments
+3. **Dashboard**
+   - Show today’s schedule
+   - Show past focus trend as a simple graph
+4. **Optional Integration**
+   - Placeholder for Google Calendar API sync
+
+---
+
+### 4. Deployment Requirements
+- The app should run directly on Replit and provide a **live URL**
+- Frontend and backend should communicate seamlessly
+- API endpoints must be functional and testable
+- Minimal setup required; all dependencies managed via `package.json` (frontend) and `requirements.txt` (backend)
+
+---
+
+### 5. Code Quality & Extras
+- Follow **modular folder structure**
+- Include **README.md** with instructions to run the app
+- Include placeholder sample data for focus logs
+- Add comments in code explaining key logic
+- Ensure the app is **hackathon-ready and demoable in <24 hours**
+
+---
+
+Please generate the full scaffold for this MVP including all files and folder structure. After scaffold, provide instructions on how to run, test, and deploy the project in Replit.
