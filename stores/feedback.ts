@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Feedback } from '@/types/shared';
+import { Feedback, ProductivityScore } from '@/types/shared';
 
 interface FeedbackState {
   pendingFeedback: { taskId: string; taskTitle: string; endTime: string } | null;
@@ -8,6 +8,12 @@ interface FeedbackState {
   submitFeedback: (feedback: Feedback) => void;
   clearPendingFeedback: () => void;
   loadRecentFeedback: (feedback: Feedback[]) => void;
+}
+
+interface ProductivityScoresState {
+  scores: Record<string, ProductivityScore>;
+  setScores: (scores: Record<string, ProductivityScore>) => void;
+  updateScore: (date: string, score: ProductivityScore) => void;
 }
 
 export const useFeedbackStore = create<FeedbackState>((set) => ({
@@ -21,4 +27,13 @@ export const useFeedbackStore = create<FeedbackState>((set) => ({
     })),
   clearPendingFeedback: () => set({ pendingFeedback: null }),
   loadRecentFeedback: (feedback) => set({ recentFeedback: feedback }),
+}));
+
+export const useProductivityScores = create<ProductivityScoresState>((set) => ({
+  scores: {},
+  setScores: (scores) => set({ scores }),
+  updateScore: (date, score) =>
+    set((state) => ({
+      scores: { ...state.scores, [date]: score },
+    })),
 }));
