@@ -31,6 +31,7 @@ This project uses a **phased development approach** designed for multiple team m
    - Follow conflict prevention rules in DEVELOPMENT.md
 
 ### 📚 Quick Links
+- 🚀 **[QUICKSTART.md](./QUICKSTART.md)** - **START HERE!** Step-by-step first actions
 - [Development Workflow](./DEVELOPMENT.md) - How to work on this project
 - [Phase Breakdown](./PHASES.md) - What each phase builds
 - [Architecture](./replit.md) - Technical decisions and setup
