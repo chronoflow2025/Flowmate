@@ -14,6 +14,7 @@ import { Task } from '@/types/shared';
 import { Button } from '@/components/ui/button';
 import { Calendar, LayoutDashboard, MessageSquare, X, Sparkles, Loader2, BarChart3, Settings } from 'lucide-react';
 import Link from 'next/link';
+import LogoutButton from '@/components/LogoutButton';
 
 export default function DashboardPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -123,6 +124,7 @@ export default function DashboardPage() {
             <div className="text-sm text-muted-foreground">
               {format(selectedDate, 'EEEE, MMMM d, yyyy')}
             </div>
+            <LogoutButton />
           </div>
         </div>
       </header>
@@ -139,13 +141,14 @@ export default function DashboardPage() {
           />
         </aside>
 
-        <main className="w-[70%] p-6 overflow-auto">
+        <main className="w-[70%] p-6 overflow-auto mb-6">
           <div className="mb-4">
             <h2 className="text-lg font-semibold">Daily Timeline</h2>
             <p className="text-sm text-muted-foreground">
               {tasks.length} tasks scheduled for today
             </p>
           </div>
+          <br />
           <div className="relative h-[calc(100vh-200px)] pl-20 pr-4">
             <DayTimeline
               date={selectedDate}

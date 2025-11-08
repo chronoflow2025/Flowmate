@@ -81,7 +81,7 @@ export function DayTimeline({
           <div
             key={hour}
             className="absolute w-full border-t border-border"
-            style={{ top: `${(index / 24) * 100}%` }}
+            style={{ top: `${(index / 12) * 100}%` }}
           >
             <div className="absolute -left-16 -top-3 text-sm text-muted-foreground">
               {format(new Date().setHours(hour, 0, 0, 0), 'h:mm a')}
@@ -93,11 +93,7 @@ export function DayTimeline({
           <div
             className="absolute w-full border-t-2 border-red-500 z-10"
             style={{ top: `${currentTimePosition}%` }}
-          >
-            <div className="absolute -left-16 -top-3 text-sm font-semibold text-red-500">
-              Now
-            </div>
-          </div>
+          />
         )}
 
         {tasks.map((task) => {
