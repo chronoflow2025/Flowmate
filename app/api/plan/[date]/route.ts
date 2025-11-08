@@ -9,6 +9,8 @@ export async function GET(
   try {
     const userId = await getUserId();
     
+    console.log('userId', userId);
+    
     if (!userId) {
       return unauthorized();
     }

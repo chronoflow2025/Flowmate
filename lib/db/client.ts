@@ -27,45 +27,74 @@ class MongoDBClient {
   }
 
   async connect(): Promise<void> {
-    // If already initialized, return early
-    if (globalForMongo.mongoClient && globalForMongo.mongoDb && globalForMongo.mongoCollection) {
-      // Verify connection is still alive by pinging
-      try {
-        await globalForMongo.mongoDb.admin().ping();
-        return;
-      } catch {
-        // Connection lost, reset and reconnect
-        globalForMongo.mongoClient = undefined;
-        globalForMongo.mongoDb = undefined;
-        globalForMongo.mongoCollection = undefined;
-      }
-    }
-
-    const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-    const dbName = process.env.MONGODB_DB_NAME || 'flowmate';
-    const collectionName = process.env.MONGODB_COLLECTION_NAME || 'keyvalue';
-
-    if (!globalForMongo.mongoClient) {
-      globalForMongo.mongoClient = new MongoClient(uri, {
-        maxPoolSize: 10,
-        serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000,
-      });
-    }
-
+  if (globalForMongo.mongoClient && globalForMongo.mongoDb && globalForMongo.mongoCollection) {
     try {
-      // Connect (idempotent - safe to call multiple times)
-      await globalForMongo.mongoClient.connect();
-      
-      globalForMongo.mongoDb = globalForMongo.mongoClient.db(dbName);
-      globalForMongo.mongoCollection = globalForMongo.mongoDb.collection<KeyValueDocument>(collectionName);
-      
-      // Create index on _id for faster lookups (idempotent)
-      await globalForMongo.mongoCollection.createIndex({ _id: 1 }, { unique: true });
-    } catch (error) {
-      throw new Error(`Failed to connect to MongoDB: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      await globalForMongo.mongoDb.admin().ping();
+      return;
+    } catch {
+      globalForMongo.mongoClient = undefined;
+      globalForMongo.mongoDb = undefined;
+      globalForMongo.mongoCollection = undefined;
     }
   }
+
+  const uri = process.env.MONGODB_URI;
+  const dbName = process.env.MONGODB_DB_NAME;
+  const collectionName = process.env.MONGODB_COLLECTION_NAME;
+
+  // Check if URI uses mongodb+srv (Atlas) which requires TLS
+  const isAtlas = uri.startsWith('mongodb+srv://');
+  
+  if (!globalForMongo.mongoClient) {
+    const clientOptions: {
+      maxPoolSize: number;
+      serverSelectionTimeoutMS: number;
+      socketTimeoutMS: number;
+      tls?: boolean;
+      tlsAllowInvalidCertificates?: boolean;
+    } = {
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 10000, // Increased for Atlas
+      socketTimeoutMS: 45000,
+    };
+
+    // For Atlas (mongodb+srv), TLS is required and handled automatically
+    // For regular mongodb:// connections, only enable TLS if explicitly needed
+    if (isAtlas) {
+      // Atlas automatically uses TLS with mongodb+srv
+      // No additional TLS config needed
+    } else if (uri.includes('ssl=true') || uri.includes('tls=true')) {
+      // If URI explicitly requests SSL/TLS
+      clientOptions.tls = true;
+    }
+
+    globalForMongo.mongoClient = new MongoClient(uri, clientOptions);
+  }
+
+  try {
+    await globalForMongo.mongoClient.connect();
+    globalForMongo.mongoDb = globalForMongo.mongoClient.db(dbName);
+    globalForMongo.mongoCollection = globalForMongo.mongoDb.collection<KeyValueDocument>(collectionName);
+
+    // MongoDB automatically creates an index on `_id`, so skip manual creation
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('MongoDB connection error:', errorMessage);
+    console.error('Connection URI format:', isAtlas ? 'mongodb+srv:// (Atlas)' : 'mongodb:// (Standard)');
+    
+    // Provide more helpful error messages
+    if (errorMessage.includes('SSL') || errorMessage.includes('TLS') || errorMessage.includes('tlsv1')) {
+      throw new Error(
+        `MongoDB SSL/TLS connection failed. ${isAtlas 
+          ? 'Check your MongoDB Atlas connection string and network access settings.' 
+          : 'For Atlas, use mongodb+srv:// instead of mongodb://'}`
+      );
+    }
+    
+    throw new Error(`Failed to connect to MongoDB: ${errorMessage}`);
+  }
+}
+
 
   async disconnect(): Promise<void> {
     if (globalForMongo.mongoClient) {
@@ -108,7 +137,12 @@ export async function safeGet<T>(key: string): Promise<DBResult<T>> {
     
     return { ok: true, value: document.value as T };
   } catch (error) {
-    return { ok: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    // Log connection errors for debugging
+    if (errorMessage.includes('connect') || errorMessage.includes('MongoDB')) {
+      console.error('MongoDB connection error in safeGet:', errorMessage);
+    }
+    return { ok: false, error: errorMessage };
   }
 }
 
@@ -122,7 +156,11 @@ export async function safeSet<T>(key: string, value: T): Promise<DBResult<null>>
     );
     return { ok: true };
   } catch (error) {
-    return { ok: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    if (errorMessage.includes('connect') || errorMessage.includes('MongoDB')) {
+      console.error('MongoDB connection error in safeSet:', errorMessage);
+    }
+    return { ok: false, error: errorMessage };
   }
 }
 
