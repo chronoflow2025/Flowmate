@@ -97,42 +97,42 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-background px-6 py-4">
+      <header className="border-b bg-background px-6 py-4" role="banner">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
-              <SettingsIcon className="w-6 h-6 text-primary" />
+              <SettingsIcon className="w-6 h-6 text-primary" aria-hidden="true" />
               <h1 className="text-2xl font-bold">FlowMate</h1>
             </div>
-            <nav className="flex items-center gap-2">
+            <nav className="flex items-center gap-2" aria-label="Main navigation">
               <Link href="/dashboard">
-                <Button variant="ghost" size="sm">
-                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                <Button variant="ghost" size="sm" aria-label="Go to Dashboard">
+                  <LayoutDashboard className="w-4 h-4 mr-2" aria-hidden="true" />
                   Dashboard
                 </Button>
               </Link>
               <Link href="/analytics">
-                <Button variant="ghost" size="sm">
-                  <BarChart3 className="w-4 h-4 mr-2" />
+                <Button variant="ghost" size="sm" aria-label="View Analytics">
+                  <BarChart3 className="w-4 h-4 mr-2" aria-hidden="true" />
                   Analytics
                 </Button>
               </Link>
               <Link href="/settings">
-                <Button variant="default" size="sm">
-                  <SettingsIcon className="w-4 h-4 mr-2" />
+                <Button variant="default" size="sm" aria-label="Open Settings" aria-current="page">
+                  <SettingsIcon className="w-4 h-4 mr-2" aria-hidden="true" />
                   Settings
                 </Button>
               </Link>
             </nav>
           </div>
-          <Button onClick={handleSave} disabled={isSaving}>
-            <Save className="w-4 h-4 mr-2" />
+          <Button onClick={handleSave} disabled={isSaving} aria-label={isSaving ? 'Saving settings...' : 'Save settings changes'}>
+            <Save className="w-4 h-4 mr-2" aria-hidden="true" />
             {isSaving ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto p-6 space-y-6">
+      <main className="max-w-4xl mx-auto p-6 space-y-6" role="main" aria-label="Settings">
         <Card>
           <CardHeader>
             <CardTitle>Notifications</CardTitle>
