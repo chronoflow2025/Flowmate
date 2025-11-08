@@ -1,7 +1,7 @@
 # Database Layer Documentation
 
 ## Overview
-FlowMate uses Replit DB (key-value store) with a repository pattern for type-safe data access.
+FlowMate uses MongoDB with a repository pattern for type-safe data access. The database layer provides a key-value store interface that maintains compatibility with the previous Replit DB implementation.
 
 ## Architecture
 
@@ -121,10 +121,26 @@ When building UI components in Phase 3:
 3. All database access must go through authenticated API routes
 4. Use Zustand stores on the client to cache API responses
 
+## Environment Variables
+
+Configure MongoDB connection using environment variables:
+
+```bash
+MONGODB_URI=mongodb://localhost:27017          # MongoDB connection string
+MONGODB_DB_NAME=flowmate                       # Database name (default: flowmate)
+MONGODB_COLLECTION_NAME=keyvalue               # Collection name (default: keyvalue)
+```
+
+For MongoDB Atlas or other cloud providers:
+```bash
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/
+```
+
 ## Migration Notes
 
-- Replit DB is a simple key-value store
+- Migrated from Replit DB to MongoDB
+- Uses a key-value collection pattern for backward compatibility
+- Connection is cached globally for Next.js serverless compatibility
 - No schema migrations needed (schemaless)
 - Data is automatically persisted
-- Works only in Replit environment
-- For production at scale, consider PostgreSQL/MongoDB
+- Works with local MongoDB or MongoDB Atlas
