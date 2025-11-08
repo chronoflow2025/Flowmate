@@ -1,0 +1,65 @@
+{
+  "lastUpdated": "2025-11-08T00:00:00Z",
+  "phases": {
+    "phase-1": {
+      "name": "Foundation & DevOps",
+      "status": "not-started",
+      "assignedTo": null,
+      "branch": null,
+      "startedAt": null,
+      "completedAt": null,
+      "dependencies": [],
+      "blockers": []
+    },
+    "phase-2": {
+      "name": "Authentication & Data Layer",
+      "status": "not-started",
+      "assignedTo": null,
+      "branch": null,
+      "startedAt": null,
+      "completedAt": null,
+      "dependencies": ["phase-1"],
+      "blockers": []
+    },
+    "phase-3": {
+      "name": "Core UI Components",
+      "status": "not-started",
+      "assignedTo": null,
+      "branch": null,
+      "startedAt": null,
+      "completedAt": null,
+      "dependencies": ["phase-1", "phase-2"],
+      "blockers": []
+    },
+    "phase-4": {
+      "name": "AI Integration & Feedback Loop",
+      "status": "not-started",
+      "assignedTo": null,
+      "branch": null,
+      "startedAt": null,
+      "completedAt": null,
+      "dependencies": ["phase-1", "phase-2", "phase-3"],
+      "blockers": []
+    },
+    "phase-5": {
+      "name": "Analytics, Settings & Polish",
+      "status": "not-started",
+      "assignedTo": null,
+      "branch": null,
+      "startedAt": null,
+      "completedAt": null,
+      "dependencies": ["phase-2", "phase-3", "phase-4"],
+      "blockers": []
+    }
+  },
+  "instructions": {
+    "howToClaimPhase": "Update the phase object with your name in 'assignedTo', create a branch, update 'branch', set 'status' to 'in-progress', and add 'startedAt' timestamp",
+    "howToCompletePhase": "Set 'status' to 'completed', add 'completedAt' timestamp, create a PR, and notify dependent phase owners",
+    "exampleUpdate": {
+      "status": "in-progress",
+      "assignedTo": "john-doe",
+      "branch": "phase-1-john-doe",
+      "startedAt": "2025-11-08T10:00:00Z"
+    }
+  }
+}
