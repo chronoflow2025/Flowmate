@@ -1,0 +1,39 @@
+import { NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs/server';
+
+export async function getUserId(): Promise<string | null> {
+  const { userId } = await auth();
+  return userId;
+}
+
+export function unauthorized() {
+  return NextResponse.json(
+    { error: 'Unauthorized', code: 'UNAUTHORIZED' },
+    { status: 401 }
+  );
+}
+
+export function badRequest(message: string) {
+  return NextResponse.json(
+    { error: message, code: 'BAD_REQUEST' },
+    { status: 400 }
+  );
+}
+
+export function notFound(message: string = 'Resource not found') {
+  return NextResponse.json(
+    { error: message, code: 'NOT_FOUND' },
+    { status: 404 }
+  );
+}
+
+export function serverError(message: string = 'Internal server error') {
+  return NextResponse.json(
+    { error: message, code: 'INTERNAL_ERROR' },
+    { status: 500 }
+  );
+}
+
+export function success<T>(data: T, status: number = 200) {
+  return NextResponse.json({ data }, { status });
+}

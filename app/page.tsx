@@ -55,11 +55,11 @@ export default function Home() {
             <div className="space-y-2 text-left">
               <div className="flex items-center justify-between p-3 bg-white rounded border">
                 <span className="font-medium">Phase 1: Foundation & DevOps</span>
-                <span className="text-sm bg-gray-200 px-3 py-1 rounded">Not Started</span>
+                <span className="text-sm bg-green-500 text-white px-3 py-1 rounded">✓ Completed</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-white rounded border">
                 <span className="font-medium">Phase 2: Auth & Data Layer</span>
-                <span className="text-sm bg-gray-200 px-3 py-1 rounded">Not Started</span>
+                <span className="text-sm bg-green-500 text-white px-3 py-1 rounded">✓ Completed</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-white rounded border">
                 <span className="font-medium">Phase 3: Core UI Components</span>
