@@ -43,7 +43,7 @@ This project uses a **phased development approach** designed for multiple team m
 ### Tech Stack
 - **Frontend:** Next.js 15 (App Router) + TypeScript + Tailwind CSS
 - **Backend:** Next.js API Routes
-- **Database:** Replit DB (Key-Value Store)
+- **Database:** MongoDB Atlas
 - **AI:** Google Gemini API (100% Free)
 - **Auth:** Clerk (Google OAuth + Guest Mode)
 - **State:** Zustand
@@ -58,13 +58,13 @@ This project uses a **phased development approach** designed for multiple team m
 
 ### Development Phases
 
-| Phase | Focus | Time | Status |
-|-------|-------|------|--------|
+| Phase       | Focus               | Time       | Status      |
+| ----------- | ------------------- | ---------- | ----------- |
 | **Phase 1** | Foundation & DevOps | 1.5-2 days | ✅ Completed |
-| **Phase 2** | Auth & Data Layer | 2-2.5 days | ✅ Completed |
-| **Phase 3** | Core UI Components | 3-3.5 days | ✅ Completed |
-| **Phase 4** | AI Integration | 2-3 days | ✅ Completed |
-| **Phase 5** | Analytics & Polish | 2 days | ✅ Completed |
+| **Phase 2** | Auth & Data Layer   | 2-2.5 days | ✅ Completed |
+| **Phase 3** | Core UI Components  | 3-3.5 days | ✅ Completed |
+| **Phase 4** | AI Integration      | 2-3 days   | ✅ Completed |
+| **Phase 5** | Analytics & Polish  | 2 days     | ✅ Completed |
 
 **Total:** 10.5-13 days for full MVP - **All phases complete!**
 
@@ -256,7 +256,7 @@ Each phase has acceptance criteria in `PHASES.md`:
 **Total MVP Cost: $0/month** 🎉
 
 - Next.js: Free (self-hosted)
-- Replit DB: Free (basic tier)
+- MongoDB Atlas: Free (shared tier)
 - Clerk Auth: Free (10K MAU)
 - Google Gemini: Free (250 req/day)
 - Replit Deployment: Free (Autoscale tier)
